@@ -15,6 +15,7 @@ def main(args):
     model.fill_weights()
 
     dummy_input_binary = torch.randn(10, 22, 19, 19)
+    dummy_input_binary[:, 0, :, :] = 1.0
     dummy_input_global = torch.randn(10, 19)
     input_names = ["input_binary", "input_global"]
     output_names = [
@@ -35,12 +36,12 @@ def main(args):
         input_names=input_names,
         output_names=output_names,
         dynamic_axes={
-            "input_binary": {0: "batch_size"},
+            "input_binary": {0: "batch_size", 2: "y_size", 3: "x_size"},
             "input_global": {0: "batch_size"},
-            "output_policy": {0: "batch_size"},
+            "output_policy": {0: "batch_size", 1: "board_area + 1"},
             "output_value": {0: "batch_size"},
             "output_miscvalue": {0: "batch_size"},
-            "output_ownership": {0: "batch_size"},
+            "output_ownership": {0: "batch_size", 2: "y_size", 3: "x_size"},
         },
     )
 

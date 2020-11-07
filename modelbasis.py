@@ -146,8 +146,12 @@ class PolicyHead(nn.Module):
         out_policy = out_policy - (1.0 - mask) * 5000.0
 
         # postprocessing
-        out_policy = out_policy.reshape((-1, 1, 361))
-        out_pass = out_pass.reshape((-1, 1, 1))
+        # out_policy = out_policy.reshape((-1, 1, 361))
+        # mask_sum_hw = mask.sum(dim=(1, 2, 3))
+        # out_policy = out_policy.reshape((-1, 1, mask_sum_hw[0].round().int().item()))
+        # out_pass = out_pass.reshape((-1, 1, 1))
+        out_policy = out_policy.flatten(start_dim=1)
+        out_pass = out_pass.reshape((-1, 1))
         return torch.cat((out_policy, out_pass), -1)
 
 
@@ -179,6 +183,7 @@ class ValueHead(nn.Module):
         # misc value subhead
         out_miscvalue = self.linear_miscvaluehead(out_v2)
         # ownership subhead output
-        out_ownership = self.conv_ownership(out_v1) * mask
+        # out_ownership = self.conv_ownership(out_v1) * mask
+        out_ownership = self.conv_ownership(out_v1)
 
         return out_value, out_miscvalue, out_ownership

@@ -14,15 +14,15 @@ Some details about the output ONNX file:
 * NCHW format (including input/output)
 * inputs:
 ```
-"input_binary": (-1, 22, 19, 19)
+"input_binary": (-1, 22, y_size, x_size)
 "input_global": (-1, 19)
 ```
 * outputs:
 ```
-"output_policy": (-1, 362)
+"output_policy": (-1, y_size * x_size + 1)
 "output_value": (-1, 3)
 "output_miscvalue": (-1, 4)
-"output_ownership": (-1, 1, 19, 19)
+"output_ownership": (-1, 1, y_size, x_size)
 ```
 * Opset 10
 ## Requirements

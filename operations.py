@@ -86,7 +86,8 @@ class NormMask(nn.Module):
         self._norm = norm(C_in, normalization, affine, fixup_use_gamma)
 
     def forward(self, x, mask):
-        return self._norm(x) * mask
+        return self._norm(x)
+        # return self._norm(x) * mask
 
 
 class NormMaskActConv(nn.Module):
